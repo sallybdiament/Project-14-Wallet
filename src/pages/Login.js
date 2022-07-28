@@ -12,10 +12,15 @@ class Login extends React.Component {
     redirect: false,
   }
 
+  validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+
   validate = () => {
     const five = 5;
     const { password, inputEmail } = this.state;
-    if (password.length > five && inputEmail.includes('@')) {
+    if (password.length > five && this.validateEmail(inputEmail)) {
       this.setState({ isEntryButtonDisabled: false });
     } else {
       this.setState({ isEntryButtonDisabled: true });
@@ -49,6 +54,7 @@ class Login extends React.Component {
             id="inputEmail"
             value={ inputEmail }
             onChange={ this.onInputChange }
+            // onBlur={ this.validateEmail }
           />
         </label>
         <label htmlFor="password">
