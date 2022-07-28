@@ -54,7 +54,6 @@ class Login extends React.Component {
             id="inputEmail"
             value={ inputEmail }
             onChange={ this.onInputChange }
-            // onBlur={ this.validateEmail }
           />
         </label>
         <label htmlFor="password">
