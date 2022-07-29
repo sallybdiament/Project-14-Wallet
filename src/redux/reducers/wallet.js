@@ -2,6 +2,9 @@ import { GET_CURRENCY } from '../actions';
 
 const initialState = {
   currencies: [],
+  expenses: [],
+  editor: false,
+  idToEdit: 0,
 };
 
 function wallet(state = initialState, action) {

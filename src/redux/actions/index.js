@@ -1,5 +1,6 @@
 export const ADD_USER = 'ADD_USER';
 export const GET_CURRENCY = 'GET_CURRENCY';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 export const addUser = (email) => ({ type: ADD_USER, email });
 
