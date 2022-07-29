@@ -17,7 +17,7 @@ class Header extends React.Component {
           {
             expenses.reduce((accExp, exp) => (
               (accExp + (Number(exp.value) * Number(exp.exchangeRates[exp.currency].ask)))
-            ), 0)
+            ), 0).toFixed(2)
           }
         </p>
         <p data-testid="header-currency-field">Câmbio: BRL</p>
