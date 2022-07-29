@@ -10,14 +10,15 @@ const getCurrency = (payload) => ({
   payload,
 });
 
-const serviceFetch = async () => {
-  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-  const data = await response.json();
-  return data;
-};
+// const serviceFetch = async () => {
+//   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+//   const data = await response.json();
+//   return data;
+// };
 
 const getArrayOfCurrrencies = async () => {
-  const data = await serviceFetch();
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const data = await response.json();
   const arrayCurr = Object.keys(data);
   const currSemUSDT = arrayCurr.filter((currencie) => currencie !== 'USDT');
   return currSemUSDT;

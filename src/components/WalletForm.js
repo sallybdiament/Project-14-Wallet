@@ -34,14 +34,14 @@ class WalletForm extends Component {
     });
   }
 
-  handleClick = () => {
+  handleSubmit = async () => {
     const { addExpenseDispatch } = this.props;
     const {
       valorDespesa, descrDespesa, currencyInput, metodoInput, categoriaInput, id,
     } = this.state;
-    const response = fetch('https://economia.awesomeapi.com.br/json/all');
-    const data = response.json();
-    const expenses = [({
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const data = await response.json();
+    const expenses = {
       id: id + 1,
       value: valorDespesa,
       description: descrDespesa,
@@ -49,8 +49,8 @@ class WalletForm extends Component {
       method: metodoInput,
       tag: categoriaInput,
       exchangeRates: data,
-    })];
-    addExpenseDispatch(...expenses);
+    };
+    addExpenseDispatch(expenses);
     this.setState({
       id: id + 1,
       valorDespesa: '',
@@ -133,7 +133,7 @@ class WalletForm extends Component {
         </label>
         <button
           type="submit"
-          onClick={ this.handleClick }
+          onClick={ this.handleSubmit }
         >
           Adicionar despesa
         </button>
