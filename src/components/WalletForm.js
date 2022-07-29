@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchCurrencies, addExpense } from '../redux/actions';
+import Table from './Table';
 
 const alimentacao = 'Alimentação';
 class WalletForm extends Component {
@@ -137,6 +138,7 @@ class WalletForm extends Component {
         >
           Adicionar despesa
         </button>
+        <Table />
       </div>
     );
   }

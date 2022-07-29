@@ -12,8 +12,6 @@ class Header extends React.Component {
           { email }
         </p>
         <p data-testid="total-field">
-          Total em R$:
-          {' '}
           {
             expenses.reduce((accExp, exp) => (
               (accExp + (Number(exp.value) * Number(exp.exchangeRates[exp.currency].ask)))
