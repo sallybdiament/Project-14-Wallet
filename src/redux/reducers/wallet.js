@@ -1,4 +1,4 @@
-import { GET_CURRENCY, REQUEST_API_CURRENCY } from '../actions';
+import { GET_CURRENCY } from '../actions';
 
 const initialState = {
   currencies: [],
