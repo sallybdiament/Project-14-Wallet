@@ -6,7 +6,7 @@ import { fetchCurrencies } from '../redux/actions';
 class WalletForm extends Component {
   componentDidMount() {
     const { addCurrenciesDispatch } = this.props;
-    console.log(addCurrenciesDispatch);
+    addCurrenciesDispatch();
     // fetch('https://economia.awesomeapi.com.br/json/all')
     //   .then((response) => response.json())
     //   .then((currencies) => {
@@ -18,6 +18,7 @@ class WalletForm extends Component {
   }
 
   render() {
+    const { currencies } = this.props;
     return (
       <div>
         <label htmlFor="valorDespesa">
@@ -51,8 +52,7 @@ class WalletForm extends Component {
             // value={ currencyInput }
             // onChange={ onInputChange }
           >
-            <option>dolar</option>
-            <option>euro</option>
+            { currencies.map((curr) => <option key={ curr }>{curr}</option>)}
           </select>
         </label>
         <label htmlFor="metodoInput">
@@ -94,8 +94,13 @@ const mapDispatchToProps = (dispatch) => ({
   addCurrenciesDispatch: () => dispatch(fetchCurrencies()),
 });
 
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
 WalletForm.propTypes = {
   addCurrenciesDispatch: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(WalletForm);
+export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
