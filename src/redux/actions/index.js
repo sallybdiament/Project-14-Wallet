@@ -13,19 +13,33 @@ const getCurrency = (payload) => ({
   payload,
 });
 
-export function fetchCurrencies() {
-  return async (dispatch) => {
-    dispatch(requestAPICurrency());
-    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const data = await response.json();
-    dispatch(getCurrency(data));
-  };
-}
-// return fetch('https://economia.awesomeapi.com.br/json/all')
-//   .then((response) => response.json())
-//   .then((currencies) => {
-//     console.log(currencies);
-//     dispatch(receiveCurrency(currencies));
-//       });
+const serviceFetch = async () => {
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const data = await response.json();
+  const arrayCurr = Object.keys(data);
+  return arrayCurr;
+};
+
+// export function fetchCurrencies() {
+//   return async (dispatch) => {
+//     dispatch(requestAPICurrency());
+// const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+// const data = await response.json();
+// const arrayCurr = Object.keys(data);
+// dispatch(getCurrency(arrayCurr));
 //   };
 // }
+//     return fetch('https://economia.awesomeapi.com.br/json/all')
+//       .then((response) => response.json())
+//       .then((currencies) => dispatch(getCurrency(currencies)));
+//   };
+// }
+
+export const fetchCurrencies = () => async (dispatch) => {
+  dispatch(requestAPICurrency());
+  const response = await serviceFetch();
+  const payload = {
+    currencies: response,
+  };
+  dispatch(getCurrency(payload));
+};

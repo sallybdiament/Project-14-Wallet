@@ -1,4 +1,4 @@
-import { REQUEST_CURRENCY } from '../actions';
+import { GET_CURRENCY, REQUEST_API_CURRENCY } from '../actions';
 
 const initialState = {
   currencies: [],
@@ -6,7 +6,7 @@ const initialState = {
 
 function wallet(state = initialState, action) {
   switch (action.type) {
-  case REQUEST_CURRENCY:
+  case GET_CURRENCY:
     return { ...state, currencies: action.payload };
   default:
     return state;

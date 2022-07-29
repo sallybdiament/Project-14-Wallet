@@ -1,11 +1,18 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchCurrencies } from '../redux/actions';
 
 class WalletForm extends Component {
   componentDidMount() {
+    const { addCurrenciesDispatch } = this.props;
+    console.log(addCurrenciesDispatch);
     // fetch('https://economia.awesomeapi.com.br/json/all')
     //   .then((response) => response.json())
     //   .then((currencies) => {
-    //     console.log(currencies);
+    //     console.log(Object.keys(currencies));
+    //     console.log(Object.entries(currencies));
+    //     console.log(Object.values(currencies));
     //     dispatch(receiveCurrency(currencies));
     //   });
   }
@@ -83,4 +90,12 @@ class WalletForm extends Component {
   }
 }
 
-export default WalletForm;
+const mapDispatchToProps = (dispatch) => ({
+  addCurrenciesDispatch: () => dispatch(fetchCurrencies()),
+});
+
+WalletForm.propTypes = {
+  addCurrenciesDispatch: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(WalletForm);
