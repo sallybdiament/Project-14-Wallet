@@ -1,15 +1,17 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchCurrencies } from '../redux/actions';
+import { fetchCurrencies, addExpense } from '../redux/actions';
 
+const alimentacao = 'Alimentação';
 class WalletForm extends Component {
   state ={
+    id: -1,
     valorDespesa: '',
     descrDespesa: '',
     currencyInput: 'USD',
     metodoInput: 'Dinheiro',
-    categoriaInput: 'Alimentação',
+    categoriaInput: alimentacao,
   }
 
   componentDidMount() {
@@ -18,11 +20,12 @@ class WalletForm extends Component {
     // fetch('https://economia.awesomeapi.com.br/json/all')
     //   .then((response) => response.json())
     //   .then((currencies) => {
+    //     console.log(currencies);
     //     console.log(Object.keys(currencies));
     //     console.log(Object.entries(currencies));
     //     console.log(Object.values(currencies));
-    //     dispatch(receiveCurrency(currencies));
-    //   });
+    // dispatch(receiveCurrency(currencies));
+    // });
   }
 
   handleChange = (event) => {
@@ -32,12 +35,29 @@ class WalletForm extends Component {
   }
 
   handleClick = () => {
+    const { addExpenseDispatch } = this.props;
+    const {
+      valorDespesa, descrDespesa, currencyInput, metodoInput, categoriaInput, id,
+    } = this.state;
+    const response = fetch('https://economia.awesomeapi.com.br/json/all');
+    const data = response.json();
+    const expenses = [({
+      id: id + 1,
+      value: valorDespesa,
+      description: descrDespesa,
+      currency: currencyInput,
+      method: metodoInput,
+      tag: categoriaInput,
+      exchangeRates: data,
+    })];
+    addExpenseDispatch(...expenses);
     this.setState({
+      id: id + 1,
       valorDespesa: '',
       descrDespesa: '',
-      currencyInput: '',
-      metodoInput: '',
-      categoriaInput: '' });
+      currencyInput: 'USD',
+      metodoInput: 'Dinheiro',
+      categoriaInput: alimentacao });
   }
 
   render() {
@@ -104,7 +124,7 @@ class WalletForm extends Component {
             value={ categoriaInput }
             onChange={ this.handleChange }
           >
-            <option>Alimentação</option>
+            <option>{alimentacao}</option>
             <option>Lazer</option>
             <option>Trabalho</option>
             <option>Transporte</option>
@@ -124,6 +144,7 @@ class WalletForm extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   addCurrenciesDispatch: () => dispatch(fetchCurrencies()),
+  addExpenseDispatch: (value) => dispatch(addExpense(value)),
 });
 
 const mapStateToProps = (state) => ({
@@ -133,6 +154,7 @@ const mapStateToProps = (state) => ({
 WalletForm.propTypes = {
   addCurrenciesDispatch: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  addExpenseDispatch: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
