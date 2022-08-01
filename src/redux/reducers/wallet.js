@@ -13,6 +13,8 @@ function wallet(state = initialState, action) {
     return { ...state, currencies: action.payload };
   case ADD_EXPENSE:
     return { ...state, expenses: [...state.expenses, action.payload] };
+  case 'DELETE_CUSTOMER':
+    return state.filter((register) => register !== action.value);
   default:
     return state;
   }

@@ -1,8 +1,15 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { deleteCustomer } from '../redux/actions';
 
 class Table extends Component {
+  handleButtonDelete = (e) => {
+    const { deleteCustomerDispatch } = this.props;
+    deleteCustomerDispatch(e);
+    console.log('clicou');
+  }
+
   render() {
     const { expenses } = this.props;
     return (
@@ -37,22 +44,42 @@ class Table extends Component {
               Editar/Excluir
             </th>
           </tr>
-          { expenses.map((exp) => (
-            <tr key={ exp.description }>
-              <td>{ exp.description}</td>
-              <td>{ exp.tag}</td>
-              <td>{ exp.method}</td>
-              <td>{ (Number(exp.value)).toFixed(2) }</td>
-              <td>{ exp.name}</td>
-              <td>{ (Number(exp.exchangeRates[exp.currency].ask)).toFixed(2) }</td>
-              <td>
-                {
-                  (Number(exp.exchangeRates[exp.currency].ask)
+          <tbody>
+            { expenses.map((exp) => (
+              <tr key={ exp.description }>
+                <td>{ exp.description}</td>
+                <td>{ exp.tag}</td>
+                <td>{ exp.method}</td>
+                <td>{ (Number(exp.value)).toFixed(2) }</td>
+                <td>{ exp.exchangeRates[exp.currency].name}</td>
+                <td>{ (Number(exp.exchangeRates[exp.currency].ask)).toFixed(2) }</td>
+                <td>
+                  {
+                    (Number(exp.exchangeRates[exp.currency].ask)
                   * Number(exp.value)).toFixed(2)
-                }
-              </td>
-              <td>Real</td>
-            </tr>))}
+                  }
+                </td>
+                <td>Real</td>
+                <td>
+                  <button
+                    data-testid="delete-btn"
+                    type="submit"
+                    // onClick={ this.handleButtonDelete }
+                  >
+                    Excluir
+                  </button>
+                </td>
+                <td>
+                  <button
+                    data-testid="edit-btn"
+                    type="submit"
+                  // onClick={ this.handleButtonEdit }
+                  >
+                    Editar
+                  </button>
+                </td>
+              </tr>))}
+          </tbody>
         </table>
       </div>
     );
@@ -63,8 +90,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  deleteCustomerDispatch: (e) => dispatch(deleteCustomer(e)),
+});
+
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.string).isRequired,
+  deleteCustomerDispatch: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

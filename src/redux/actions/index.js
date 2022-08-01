@@ -4,6 +4,7 @@ export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 export const addUser = (email) => ({ type: ADD_USER, email });
 export const addExpense = (payload) => ({ type: ADD_EXPENSE, payload });
+export const deleteCustomer = (value) => ({ type: 'DELETE_CUSTOMER', value });
 
 const getCurrency = (payload) => ({
   type: GET_CURRENCY,
