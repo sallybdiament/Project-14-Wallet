@@ -42,11 +42,16 @@ class Table extends Component {
               <td>{ exp.description}</td>
               <td>{ exp.tag}</td>
               <td>{ exp.method}</td>
-              <td>{ exp.value}</td>
-              <td>{ exp.currency}</td>
-              <td>{ exp.exchangeRates[exp.currency].ask }</td>
-              <td>{ Number(exp.exchangeRates[exp.currency].ask) * Number(exp.value) }</td>
-              <td>{ exp.currency}</td>
+              <td>{ (Number(exp.value)).toFixed(2) }</td>
+              <td>{ exp.name}</td>
+              <td>{ (Number(exp.exchangeRates[exp.currency].ask)).toFixed(2) }</td>
+              <td>
+                {
+                  (Number(exp.exchangeRates[exp.currency].ask)
+                  * Number(exp.value)).toFixed(2)
+                }
+              </td>
+              <td>Real</td>
             </tr>))}
         </table>
       </div>

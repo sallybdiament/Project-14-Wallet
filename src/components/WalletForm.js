@@ -13,7 +13,7 @@ class WalletForm extends Component {
     currencyInput: 'USD',
     metodoInput: 'Dinheiro',
     categoriaInput: alimentacao,
-    isTableFilled: false,
+    // isTableFilled: false,
   }
 
   componentDidMount() {
@@ -60,7 +60,7 @@ class WalletForm extends Component {
       currencyInput: 'USD',
       metodoInput: 'Dinheiro',
       categoriaInput: alimentacao,
-      isTableFilled: true,
+      // isTableFilled: true,
     });
   }
 
@@ -68,7 +68,7 @@ class WalletForm extends Component {
     const { currencies } = this.props;
     const {
       valorDespesa,
-      descrDespesa, currencyInput, metodoInput, categoriaInput, isTableFilled,
+      descrDespesa, currencyInput, metodoInput, categoriaInput,
     } = this.state;
     return (
       <div>
@@ -142,7 +142,8 @@ class WalletForm extends Component {
         >
           Adicionar despesa
         </button>
-        { isTableFilled && <Table />}
+        {/* { isTableFilled && <Table />} */}
+        <Table />
       </div>
     );
   }
