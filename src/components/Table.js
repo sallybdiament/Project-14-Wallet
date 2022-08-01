@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 class Table extends Component {
   render() {
     const { expenses } = this.props;
-    const expensesItem = expenses.length - 1;
     return (
       <div>
         <table>
@@ -38,9 +37,17 @@ class Table extends Component {
               Editar/Excluir
             </th>
           </tr>
-          <tr>
-            <td>{ expenses[expensesItem].description }</td>
-          </tr>
+          { expenses.map((exp) => (
+            <tr key={ exp.description }>
+              <td>{ exp.description}</td>
+              <td>{ exp.tag}</td>
+              <td>{ exp.method}</td>
+              <td>{ exp.value}</td>
+              <td>{ exp.currency}</td>
+              <td>{ exp.exchangeRates[exp.currency].ask }</td>
+              <td>{ Number(exp.exchangeRates[exp.currency].ask) * Number(exp.value) }</td>
+              <td>{ exp.currency}</td>
+            </tr>))}
         </table>
       </div>
     );
