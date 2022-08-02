@@ -78,7 +78,14 @@ class WalletForm extends Component {
     };
     const otherExpenses = expenses.filter((exp) => exp.id !== Number(idToEdit));
     const allExpenses = otherExpenses.concat(editedExpense);
-    editExpenseDispatch(allExpenses);
+    // const allExpSorted = allExpenses.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+    const one = 1;
+    const allExpSorted = allExpenses.sort((a, b) => {
+      if (a.id < b.id) return -one;
+      if (a.id > b.id) return 1;
+      return 0;
+    });
+    editExpenseDispatch(allExpSorted);
     this.setState({
       id: id + 1,
       valorDespesa: '',
