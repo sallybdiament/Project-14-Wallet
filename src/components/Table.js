@@ -1,13 +1,19 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { deleteCustomer } from '../redux/actions';
+import { deleteCustomer, activateEdit } from '../redux/actions';
 
 class Table extends Component {
 handleClick = (event) => {
   const { id } = event.target;
   const { deleteCustomerDispatch } = this.props;
   deleteCustomerDispatch(id);
+}
+
+handleEditClick = (event) => {
+  const { id } = event.target;
+  const { activateEditDispatch } = this.props;
+  activateEditDispatch(id);
 }
 
 render() {
@@ -62,10 +68,13 @@ render() {
               <td>Real</td>
               <td>
                 <button
+                  key={ exp.id }
+                  id={ exp.id }
                   data-testid="edit-btn"
                   type="submit"
+                  onClick={ this.handleEditClick }
                 >
-                  Editar
+                  Editar despesa
                 </button>
                 <button
                   data-testid="delete-btn"
@@ -91,11 +100,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   deleteCustomerDispatch: (e) => dispatch(deleteCustomer(e)),
+  activateEditDispatch: (e) => dispatch(activateEdit(e)),
 });
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.string).isRequired,
   deleteCustomerDispatch: PropTypes.func.isRequired,
+  activateEditDispatch: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

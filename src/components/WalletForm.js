@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchCurrencies, addExpense } from '../redux/actions';
+import { fetchCurrencies, addExpense, editExpense } from '../redux/actions';
 import Table from './Table';
 
 const alimentacao = 'Alimentação';
@@ -13,7 +13,6 @@ class WalletForm extends Component {
     currencyInput: 'USD',
     metodoInput: 'Dinheiro',
     categoriaInput: alimentacao,
-    // isTableFilled: false,
   }
 
   componentDidMount() {
@@ -60,12 +59,38 @@ class WalletForm extends Component {
       currencyInput: 'USD',
       metodoInput: 'Dinheiro',
       categoriaInput: alimentacao,
-      // isTableFilled: true,
+    });
+  }
+
+  handleEditSubmit = () => {
+    const { editExpenseDispatch, idToEdit, expenses } = this.props;
+    const {
+      valorDespesa, descrDespesa, currencyInput, metodoInput, categoriaInput, id,
+    } = this.state;
+    const editedExpense = {
+      id: Number(idToEdit),
+      value: valorDespesa,
+      description: descrDespesa,
+      currency: currencyInput,
+      method: metodoInput,
+      tag: categoriaInput,
+      exchangeRates: expenses[idToEdit].exchangeRates,
+    };
+    const otherExpenses = expenses.filter((exp) => exp.id !== Number(idToEdit));
+    const allExpenses = otherExpenses.concat(editedExpense);
+    editExpenseDispatch(allExpenses);
+    this.setState({
+      id: id + 1,
+      valorDespesa: '',
+      descrDespesa: '',
+      currencyInput: 'USD',
+      metodoInput: 'Dinheiro',
+      categoriaInput: alimentacao,
     });
   }
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, editor } = this.props;
     const {
       valorDespesa,
       descrDespesa, currencyInput, metodoInput, categoriaInput,
@@ -136,13 +161,15 @@ class WalletForm extends Component {
             <option>Saúde</option>
           </select>
         </label>
-        <button
-          type="submit"
-          onClick={ this.handleSubmit }
-        >
-          Adicionar despesa
-        </button>
-        {/* { isTableFilled && <Table />} */}
+        { editor
+          ? (
+            <button type="submit" onClick={ this.handleEditSubmit }>
+              Editar despesa
+            </button>)
+          : (
+            <button type="submit" onClick={ this.handleSubmit }>
+              Adicionar despesa
+            </button>)}
         <Table />
       </div>
     );
@@ -152,16 +179,24 @@ class WalletForm extends Component {
 const mapDispatchToProps = (dispatch) => ({
   addCurrenciesDispatch: () => dispatch(fetchCurrencies()),
   addExpenseDispatch: (value) => dispatch(addExpense(value)),
+  editExpenseDispatch: (value) => dispatch(editExpense(value)),
 });
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  editor: state.wallet.editor,
+  idToEdit: state.wallet.idToEdit,
+  expenses: state.wallet.expenses,
 });
 
 WalletForm.propTypes = {
   addCurrenciesDispatch: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   addExpenseDispatch: PropTypes.func.isRequired,
+  editor: PropTypes.bool.isRequired,
+  editExpenseDispatch: PropTypes.func.isRequired,
+  idToEdit: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
