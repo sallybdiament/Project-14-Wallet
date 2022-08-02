@@ -4,86 +4,85 @@ import { connect } from 'react-redux';
 import { deleteCustomer } from '../redux/actions';
 
 class Table extends Component {
-  handleButtonDelete = (e) => {
-    const { deleteCustomerDispatch } = this.props;
-    deleteCustomerDispatch(e);
-    console.log('clicou');
-  }
+handleClick = (event) => {
+  const { id } = event.target;
+  const { deleteCustomerDispatch } = this.props;
+  deleteCustomerDispatch(id);
+}
 
-  render() {
-    const { expenses } = this.props;
-    return (
-      <div>
-        <table>
-          <tr>
-            <th>
-              Descrição
-            </th>
-            <th>
-              Tag
-            </th>
-            <th>
-              Método de pagamento
-            </th>
-            <th>
-              Valor
-            </th>
-            <th>
-              Moeda
-            </th>
-            <th>
-              Câmbio utilizado
-            </th>
-            <th>
-              Valor convertido
-            </th>
-            <th>
-              Moeda de conversão
-            </th>
-            <th>
-              Editar/Excluir
-            </th>
-          </tr>
-          <tbody>
-            { expenses.map((exp) => (
-              <tr key={ exp.description }>
-                <td>{ exp.description}</td>
-                <td>{ exp.tag}</td>
-                <td>{ exp.method}</td>
-                <td>{ (Number(exp.value)).toFixed(2) }</td>
-                <td>{ exp.exchangeRates[exp.currency].name}</td>
-                <td>{ (Number(exp.exchangeRates[exp.currency].ask)).toFixed(2) }</td>
-                <td>
-                  {
-                    (Number(exp.exchangeRates[exp.currency].ask)
+render() {
+  const { expenses } = this.props;
+  return (
+    <div>
+      <table>
+        <tr>
+          <th>
+            Descrição
+          </th>
+          <th>
+            Tag
+          </th>
+          <th>
+            Método de pagamento
+          </th>
+          <th>
+            Valor
+          </th>
+          <th>
+            Moeda
+          </th>
+          <th>
+            Câmbio utilizado
+          </th>
+          <th>
+            Valor convertido
+          </th>
+          <th>
+            Moeda de conversão
+          </th>
+          <th>
+            Editar/Excluir
+          </th>
+        </tr>
+        <tbody>
+          { expenses.map((exp) => (
+            <tr key={ exp.description }>
+              <td>{ exp.description}</td>
+              <td>{ exp.tag}</td>
+              <td>{ exp.method}</td>
+              <td>{ (Number(exp.value)).toFixed(2) }</td>
+              <td>{ exp.exchangeRates[exp.currency].name}</td>
+              <td>{ (Number(exp.exchangeRates[exp.currency].ask)).toFixed(2) }</td>
+              <td>
+                {
+                  (Number(exp.exchangeRates[exp.currency].ask)
                   * Number(exp.value)).toFixed(2)
-                  }
-                </td>
-                <td>Real</td>
-                <td>
-                  <button
-                    data-testid="delete-btn"
-                    type="submit"
-                    // onClick={ this.handleButtonDelete }
-                  >
-                    Excluir
-                  </button>
-                </td>
-                <td>
-                  <button
-                    data-testid="edit-btn"
-                    type="submit"
-                  // onClick={ this.handleButtonEdit }
-                  >
-                    Editar
-                  </button>
-                </td>
-              </tr>))}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
+                }
+              </td>
+              <td>Real</td>
+              <td>
+                <button
+                  data-testid="edit-btn"
+                  type="submit"
+                >
+                  Editar
+                </button>
+                <button
+                  data-testid="delete-btn"
+                  key={ exp.id }
+                  type="submit"
+                  onClick={ this.handleClick }
+                  id={ exp.id }
+                >
+                  Excluir
+                </button>
+              </td>
+            </tr>))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 }
 
 const mapStateToProps = (state) => ({

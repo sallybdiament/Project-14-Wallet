@@ -1,10 +1,11 @@
 export const ADD_USER = 'ADD_USER';
 export const GET_CURRENCY = 'GET_CURRENCY';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const DELETE_CUSTOMER = 'DELETE_CUSTOMER';
 
 export const addUser = (email) => ({ type: ADD_USER, email });
 export const addExpense = (payload) => ({ type: ADD_EXPENSE, payload });
-export const deleteCustomer = (value) => ({ type: 'DELETE_CUSTOMER', value });
+export const deleteCustomer = (payload) => ({ type: DELETE_CUSTOMER, payload });
 
 const getCurrency = (payload) => ({
   type: GET_CURRENCY,

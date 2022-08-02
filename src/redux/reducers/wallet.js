@@ -1,4 +1,4 @@
-import { GET_CURRENCY, ADD_EXPENSE } from '../actions';
+import { GET_CURRENCY, ADD_EXPENSE, DELETE_CUSTOMER } from '../actions';
 
 const initialState = {
   currencies: [],
@@ -13,8 +13,11 @@ function wallet(state = initialState, action) {
     return { ...state, currencies: action.payload };
   case ADD_EXPENSE:
     return { ...state, expenses: [...state.expenses, action.payload] };
-  case 'DELETE_CUSTOMER':
-    return state.filter((register) => register !== action.value);
+  case DELETE_CUSTOMER:
+    return {
+      ...state,
+      expenses: state.expenses
+        .filter((exp) => Number(exp.id) !== Number(action.payload)) };
   default:
     return state;
   }
