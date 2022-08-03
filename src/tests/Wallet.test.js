@@ -82,12 +82,19 @@ describe('tela da carteira', () => {
         const editExpButton = await screen.getAllByRole('button', { name: 'Editar despesa'});
         expect(editExpButton).toHaveLength(3);
     })
-        // test('se o botao editar aparece ', async () => {
-        //     renderWithRouterAndRedux(<Wallet />)
-        //     const editButton = await screen.getByRole('button', {  name: /editar despesa/i});
-        //     expect(editButton).toBeInTheDocument();
-
-        // })
+    test('se ao clicar em deletar a despesa é deletada', async () => {
+        renderWithRouterAndRedux(<Wallet />,
+      
+        {
+        initialState: intitialStateMock,
+        initialPath: '/carteira' });
+        const botaoAddExp = screen.getByRole('button', {  name: /adicionar despesa/i});
+        userEvent.click(botaoAddExp);
+        const deleteButton = await screen.getAllByRole('button', {  name: /excluir/i});
+        userEvent.click(deleteButton[0]);
+        const rows = await screen.getAllByRole('row');;
+        expect(rows).toHaveLength(2);
+    })
     })
   
 
