@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { addUser } from '../redux/actions';
+import '../css/login.css';
 
 class Login extends React.Component {
   state ={
@@ -44,7 +45,7 @@ class Login extends React.Component {
   render() {
     const { isEntryButtonDisabled, inputEmail, password, redirect } = this.state;
     return (
-      <div>
+      <div className="login">
         <label htmlFor="inputEmail">
           Insira seu e-mail:
           <input
