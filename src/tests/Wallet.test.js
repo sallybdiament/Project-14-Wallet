@@ -6,7 +6,7 @@ import Wallet from '../pages/Wallet';
 import mockData from './helpers/mockData';
 import userEvent from '@testing-library/user-event';
 
-const intitialStateMock = {
+const initialStateMock = {
     email: 'sally@gmail.com',
     wallet: {
     currencies: ['usd', 'euro'],
@@ -42,7 +42,7 @@ describe('tela da carteira', () => {
         renderWithRouterAndRedux(<Wallet />,
       
         {
-        initialState: intitialStateMock,
+        initialState: initialStateMock,
         initialPath: '/carteira' });
         const emailLogado = screen.getByTestId('email-field');
         expect(emailLogado).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe('tela da carteira', () => {
         renderWithRouterAndRedux(<Wallet />,
       
         {
-        initialState: intitialStateMock,
+        initialState: initialStateMock,
         initialPath: '/carteira' });
         const botaoAddExp = screen.getByRole('button', {  name: /adicionar despesa/i});
         userEvent.click(botaoAddExp);
@@ -64,7 +64,7 @@ describe('tela da carteira', () => {
         renderWithRouterAndRedux(<Wallet />,
       
         {
-        initialState: intitialStateMock,
+        initialState: initialStateMock,
         initialPath: '/carteira' });
         const inputMoeda = await screen.getByLabelText('Moeda:');
         expect(inputMoeda).toHaveLength(2);
@@ -73,7 +73,7 @@ describe('tela da carteira', () => {
         renderWithRouterAndRedux(<Wallet />,
       
         {
-        initialState: intitialStateMock,
+        initialState: initialStateMock,
         initialPath: '/carteira' });
         const botaoAddExp = screen.getByRole('button', {  name: /adicionar despesa/i});
         userEvent.click(botaoAddExp);
@@ -86,7 +86,7 @@ describe('tela da carteira', () => {
         renderWithRouterAndRedux(<Wallet />,
       
         {
-        initialState: intitialStateMock,
+        initialState: initialStateMock,
         initialPath: '/carteira' });
         const botaoAddExp = screen.getByRole('button', {  name: /adicionar despesa/i});
         userEvent.click(botaoAddExp);
@@ -98,6 +98,4 @@ describe('tela da carteira', () => {
     })
   
 
-    // const mockFetch = () => Promise.resolve({
-    //     json: () => Promise.resolve(mockData),
-    //   });
+  
