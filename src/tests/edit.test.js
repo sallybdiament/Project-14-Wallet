@@ -22,7 +22,21 @@ const initialStateMock = {
                 USD: {
                   ask: 5.182,
                 } }, },
-        ]   }  
+                {
+                    id: 1,
+                    value: '2',
+                    description: 'b',
+                    currency: 'USD',
+                    method: 'Dinheiro',
+                    tag: 'alimentacao', 
+                    exchangeRates: {
+                        USD: {
+                          ask: 5.182,
+                        } },
+                },
+        ],
+        editor: false,
+    }  
 }
 
 describe('tela da carteira', () => {
@@ -35,12 +49,45 @@ describe('tela da carteira', () => {
         const botaoAddExp = screen.getByRole('button', {  name: /adicionar despesa/i});
         userEvent.click(botaoAddExp);
         const editButton = screen.getAllByRole('button', {  name: /editar despesa/i});
-        userEvent.click(editButton[0]);
+            userEvent.click(editButton[0]);
         const editExpButton = screen.getAllByRole('button', { name: 'Editar despesa'});
         const inputValue = screen.getByTestId("value-input");
             userEvent.type(inputValue, '1');
             userEvent.click(editExpButton[0]);
         const totalValue = screen.getByTestId('total-field');
-        expect(totalValue.innerHTML).toBe('5.18')
+        expect(totalValue.innerHTML).toBe('15.55')
     })
+    test('o edit chama funcao sort', () => {
+        renderWithRouterAndRedux(<Wallet />,
+      
+        {
+        initialState: initialStateMock,
+        initialPath: '/carteira' });
+        const editButton = screen.getAllByRole('button', {  name: /editar despesa/i});
+            userEvent.click(editButton[0]);
+        const editExpButton = screen.getAllByRole('button', { name: 'Editar despesa'});
+        const inputValue = screen.getByTestId("value-input");
+            userEvent.type(inputValue, '1');
+            userEvent.click(editExpButton[0]);
+            const newValue = screen.getByRole('cell', {  name: /1\.00/i});
+            expect(newValue).toBeInTheDocument();
+     
+        })
+        test('o edit altera o valor do total', () => {
+            renderWithRouterAndRedux(<Wallet />,
+          
+            {
+            initialState: initialStateMock,
+            initialPath: '/carteira' });
+            const botaoAddExp = screen.getByRole('button', {  name: /adicionar despesa/i});
+            userEvent.click(botaoAddExp);
+            const editButton = screen.getAllByRole('button', {  name: /editar despesa/i});
+                userEvent.click(editButton[1]);
+            const editExpButton = screen.getAllByRole('button', { name: 'Editar despesa'});
+            const inputValue = screen.getByTestId("value-input");
+                userEvent.type(inputValue, '0');
+                userEvent.click(editExpButton[0]);
+            const totalValue = screen.getByTestId('total-field');
+            expect(totalValue.innerHTML).toBe('0.00')
+        })
 })
