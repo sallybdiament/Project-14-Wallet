@@ -1,4 +1,5 @@
 {
+  "homepage": "https://sallybdiament.github.io/Project-14-Wallet",
   "name": "sd-0x-project-trybewallet",
   "version": "0.1.0",
   "private": true,
@@ -22,6 +23,8 @@
     "stylelint-order": "4.1.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "cy": "cypress run",
     "cy:open": "cypress open",
     "start": "react-scripts start",
@@ -60,6 +63,7 @@
     "eslint-plugin-react-hooks": "4.2.0",
     "eslint-plugin-react-redux": "3.3.0",
     "eslint-plugin-sonarjs": "0.14.0",
+    "gh-pages": "^4.0.0",
     "jest-localstorage-mock": "2.4.3",
     "mocha": "^10.0.0",
     "mochawesome": "^7.1.3",
